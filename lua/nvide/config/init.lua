@@ -11,7 +11,7 @@ local defaults = {
   colorscheme = function()
     require("melange").load()
   end,
-  icons = nvlibs.loadpkg("nvide.config.icons")
+  icons = require("nvide.config.icons")
 }
 
 _M.renames = {
@@ -73,6 +73,7 @@ end
 ---@param name "autocmds" | "options" | "keymaps" the package to load
 function _M.load(name)
   local function _load(mod)
+    local nvlibs = require("nvide.libs")
     local _pkg = nvlibs.loadpkg(mod)
     if _pkg == nil then
       local info = nvlibs.loadpkg("lazy.core.cache").find(mod)
