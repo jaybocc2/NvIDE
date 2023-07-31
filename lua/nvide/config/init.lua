@@ -1,3 +1,4 @@
+---@type NvIdeConfig
 local _M = {}
 
 local nvlibs = require("nvide.libs")
