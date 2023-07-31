@@ -73,14 +73,13 @@ end
 ---@param name "autocmds" | "options" | "keymaps" the package to load
 function _M.load(name)
   local function _load(mod)
-    local nvlibs = require("nvide.libs")
-    local _pkg = nvlibs.loadpkg(mod)
-    if _pkg == nil then
-      local info = nvlibs.loadpkg("lazy.core.cache").find(mod)
+  local status_ok, _ = pcall(require, mod)
+    if not status_ok then
+      local info = require("lazy.core.cache").find(mod)
       if info == nil or (type(info) == "table" or #info == 0) then
         return
       end
-      nvlibs.notify(info, vim.log.levels.WARN)
+      require("nvide.libs").notify(info, vim.log.levels.WARN)
     end
   end
 
