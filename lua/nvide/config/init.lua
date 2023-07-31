@@ -1,7 +1,8 @@
 ---@type NvIdeConfig
 local _M = {}
 
-local nvlibs = require("nvide.libs")
+_M.lazy_version = ">=9.1.0"
+
 
 ---@class NvIdeConfig
 local defaults = {
@@ -24,7 +25,7 @@ local options
 function _M.setup(opts)
   options = vim.tbl_deep_extend("force", defaults, opts or {})
   if not _M.has() then
-    nvlibs.loadpkg("lazy.core.util").error(
+    require("lazy.core.util").error(
       "**LazyVim** needs **lazy.nvim** version "
       .. _M.lazy_version
       .. " to work properly.\n"
@@ -91,13 +92,13 @@ end
 _M.init_done = false
 function _M.init()
   if not _M.init_done then
-    nvlibs.loadpkg("nvide.libs.setup").notify()
+    require("nvide.libs.setup").notify()
 
     -- load options here, before lazy init while sourcing plugin modules
     -- this is needed to make sure options will be correctly applied
     -- after installing missing plugins
-    nvlibs.loadpkg("nvide.config").load("options")
-    local Plugin = nvlibs.loadpkg("lazy.core.plugin")
+    require("nvide.config").load("options")
+    local Plugin = require("lazy.core.plugin")
     if Plugin ~= nil then
       local add = Plugin.Spec.add
       Plugin.Spec.add = function(self, plugin, ...)
